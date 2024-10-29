@@ -1,5 +1,5 @@
 with
-    order_detail as (
+    sale_detail as (
         select
             salesorderid
             , productid
@@ -12,4 +12,4 @@ with
     )
 
 select *
-from order_detail
+from sale_detail
