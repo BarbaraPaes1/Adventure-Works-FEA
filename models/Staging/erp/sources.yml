@@ -308,3 +308,14 @@ sources:
             description: "Date and time the record was last updated."
 
 
+      - name: SALESORDERHEADERSALESREASON 
+        description: "Cross-reference table mapping sales orders to sales reason codes."
+        columns:
+          - name: salesorderid
+            description: "Primary key. Foreign key to SalesOrderHeader.SalesOrderID."
+            tests: 
+              - not_null
+          - name: salesreasonid
+            description: "Primary key. Foreign key to SalesReason.SalesReasonID."
+          - name: modifieddate
+            description: "Date and time the record was last updated."   
