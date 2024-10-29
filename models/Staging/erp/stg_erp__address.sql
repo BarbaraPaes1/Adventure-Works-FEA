@@ -7,7 +7,7 @@ with
             , city 
             , postalcode
             , modifieddate
-        from{{ source('erp_adventureworks','address')}}
+        from{{ source('erp_adventureworks','ADDRESS')}}
     )
 
 select *
