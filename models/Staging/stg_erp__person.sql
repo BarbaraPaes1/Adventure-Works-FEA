@@ -7,7 +7,7 @@ with
             , middlename
             , lastname
             , modifieddate
-        from{{ source('erp_adventureworks','person')}}
+        from{{ source('erp_adventureworks','PERSON')}}
     )
 
 select *
