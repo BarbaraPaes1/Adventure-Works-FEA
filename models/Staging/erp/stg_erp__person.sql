@@ -8,7 +8,7 @@ with
             , lastname
             , cast(firstname || ' ' || middlename || ' ' || lastname) as full_name
             , modifieddate
-        from{{ source('erp_adventureworks','PERSON')}}
+        from {{ source('erp_adventureworks','PERSON')}}
     )
 
 select *

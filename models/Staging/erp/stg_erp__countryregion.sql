@@ -4,7 +4,7 @@ with
             countryregioncode
             , name as country_name
             , modifieddate
-        from{{ source('erp_adventureworks','COUNTRYREGION')}}
+        from {{ source('erp_adventureworks','COUNTRYREGION')}}
     )
 
 select *

@@ -3,7 +3,7 @@ with
         select
             creditcardid
             , businessentityid
-        from{{ source('erp_adventureworks','PERSONCREDITCARD')}}
+        from {{ source('erp_adventureworks','PERSONCREDITCARD')}}
     )
 
 select *

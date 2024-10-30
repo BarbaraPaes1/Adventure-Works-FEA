@@ -4,7 +4,7 @@ with
             creditcardid
             , cardtype 
             , modifieddate
-        from{{ source('erp_adventureworks','CREDITCARD')}}
+        from {{ source('erp_adventureworks','CREDITCARD')}}
     )
 
 select *

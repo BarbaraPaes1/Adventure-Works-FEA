@@ -4,7 +4,7 @@ with
             salesorderid
             , salesreasonid
             , modifieddate
-        from{{ source('erp_adventureworks','SALESORDERHEADERSALESREASON')}}
+        from {{ source('erp_adventureworks','SALESORDERHEADERSALESREASON')}}
     )
 
 select *
