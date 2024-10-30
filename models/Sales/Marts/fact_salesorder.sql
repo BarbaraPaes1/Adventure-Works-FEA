@@ -13,6 +13,11 @@ with
             *
         from {{ ref('dim_customer')}}
     )
+    ,    dim_product as (
+        select 
+            *
+        from {{ ref('dim_product')}}
+    )
 
     , dim_creditcard as (
         select 
@@ -66,7 +71,9 @@ with
         left join dim_calender
             on salesheader.orderdate = dim_calender.date_day
         left join dim_salesdetails
-            on salesheader.salesorderid = dim_salesdetails.salesorderid      
+            on salesheader.salesorderid = dim_salesdetails.salesorderid 
+        left join dim_product
+            on dim_salesdetails.productid = dim_product.productid     
     )
 
 select * 
