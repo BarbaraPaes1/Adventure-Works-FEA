@@ -1,10 +1,10 @@
 with
-    sales_reason as(
+    sales_reason as (
         select
-            salesorderid
-            , name as salereason_name
-            , reasontype as reason_type
-        from {{ source('erp_adventureworks','SALESREASON')}}
+            salesorderid as salesorderid,  
+            name as salereason_name,
+            reasontype as reason_type
+        from {{ source('erp_adventureworks', 'SALESREASON') }}
     )
 
 select *
