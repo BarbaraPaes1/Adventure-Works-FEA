@@ -5,7 +5,7 @@ with
             , personid
             , territoryid
             , modifieddate
-        from{{ source('erp_adventureworks','CUSTOMER')}}
+        from {{ source('erp_adventureworks','CUSTOMER')}}
     )
 
 select *

@@ -4,7 +4,7 @@ with
             salesorderid
             , name as salereason_name
             , reasontype as reason_type
-        from{{ source('erp_adventureworks','SALESREASON')}}
+        from {{ source('erp_adventureworks','SALESREASON')}}
     )
 
 select *

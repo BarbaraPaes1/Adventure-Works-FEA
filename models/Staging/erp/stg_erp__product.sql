@@ -13,7 +13,7 @@ with
             , standardcost
             , listprice
             , modifieddate
-        from{{ source('erp_adventureworks','PRODUCT')}}
+        from {{ source('erp_adventureworks','PRODUCT')}}
     )
 
 select *

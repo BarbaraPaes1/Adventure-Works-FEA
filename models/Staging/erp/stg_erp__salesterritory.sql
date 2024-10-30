@@ -8,7 +8,7 @@ with
             , salesytd
             , saleslastyear
             , modifieddate
-        from{{ source('erp_adventureworks','SALESTERRITORY')}} t
+        from {{ source('erp_adventureworks','SALESTERRITORY')}} t
     )
 
 select *

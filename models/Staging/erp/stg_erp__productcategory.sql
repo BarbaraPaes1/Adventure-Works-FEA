@@ -4,7 +4,7 @@ with
             productcategoryid
             , name as product_category_name
             , modifieddate
-        from{{ source('erp_adventureworks','PRODUCTCATEGORY')}}
+        from {{ source('erp_adventureworks','PRODUCTCATEGORY')}}
     )
 
 select *
