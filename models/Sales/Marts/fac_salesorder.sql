@@ -5,67 +5,66 @@ with
     dim_location as (
         select 
             *
-        from {{ ref('dim_location')}}
-    )
+        from {{ ref('dim_location') }}
+    ),
 
-    , dim_customer as (
+    dim_customer as (
         select 
             *
-        from {{ ref('dim_customer')}}
-    )
-    ,    dim_product as (
+        from {{ ref('dim_customer') }}
+    ),
+
+    dim_product as (
         select 
             *
-        from {{ ref('dim_product')}}
-    )
+        from {{ ref('dim_product') }}
+    ),
 
-    , dim_creditcard as (
+    dim_creditcard as (
         select 
             *
-        from {{ ref('dim_creditcard')}}
-    )
+        from {{ ref('dim_creditcard') }}
+    ),
 
-    , dim_calender as (
+    dim_calender as (
         select 
             *
-        from {{ ref('dim_calender')}}
-    )
+        from {{ ref('dim_calender') }}
+    ),
 
-    , dim_salesdetails as (
+    dim_salesdetails as (
         select 
             *
-        from {{ ref('dim_salesdetails')}}
-    ) 
-    --Fazendo join 
+        from {{ ref('dim_salesdetails') }}
+    ),
 
-    , fact_salesorder as (
+    fac_salesorder as (
         select
-            salesheader.salesorderid
-            , dim_location.sk_region as fk_region
-            , dim_creditcard.sk_creditcard as fk_creditcard
-            , dim_customer.sk_customer as fk_customer
-            , dim_calender.sk_calendar as fk_calendar
-            , ifnull(final_reason.reason_agg, 'Not informed') as reason_agg
-            , salesheader.orderdate
-            , salesheader.duedate
-            , salesheader.shipdate
-            , case
+            salesheader.salesorderid,
+            dim_location.sk_region as fk_region,
+            dim_creditcard.sk_creditcard as fk_creditcard,
+            dim_customer.sk_customer as fk_customer,
+            dim_calender.sk_calendar as fk_calendar,
+            salesheader.orderdate,
+            salesheader.duedate,
+            salesheader.shipdate,
+            case
                 when salesheader.status = 1 then 'In process'
                 when salesheader.status = 2 then 'Approved'
                 when salesheader.status = 3 then 'Backordered'
                 when salesheader.status = 4 then 'Rejected'
                 when salesheader.status = 5 then 'Shipped'
                 when salesheader.status = 6 then 'Cancelled'
-            end as order_status
-            , salesheader.subtotal
-            , salesheader.taxamt
-            , salesheader.freight
-            , salesheader.totaldue
-        from {{ ref('stg_erp__salesorderheader')}} as salesheader
+            end as order_status,
+            salesheader.subtotal,
+            salesheader.taxamt,
+            salesheader.freight,
+            salesheader.totaldue
+        from {{ ref('stg_erp__salesorderheader') }} as salesheader
         left join dim_location
             on salesheader.billtoaddressid = dim_location.addressid
         left join dim_creditcard
-            on salesheader.creditcardid = dim_credtcard.creditcardid
+            on salesheader.creditcardid = dim_creditcard.creditcardid  
         left join dim_customer
             on salesheader.customerid = dim_customer.customerid
         left join dim_calender
@@ -77,4 +76,4 @@ with
     )
 
 select * 
-from fact_salesorder
+from fac_salesorder
