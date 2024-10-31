@@ -7,7 +7,7 @@ with
             , personid
             , territoryid
             , modifieddate
-        from{{ref('stg_erp__customer')}}
+        from {{ref('stg_erp__customer')}}
     )
 
     , person as (
@@ -19,7 +19,7 @@ with
             , lastname
             , fullname
             , modifieddate
-        from{{ref('stg_erp__person')}}
+        from {{ref('stg_erp__person')}}
     )
 
     , joined_customer as (
@@ -36,7 +36,7 @@ with
         where person.persontype = 'IN'
     )
 
-    , dCustomer as (
+    , dim_customer as (
         select 
             {{ dbt_utils.generate_surrogate_key(['customerid', 'businessentityid', 'fullname']) }} as sk_customer
             , *

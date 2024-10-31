@@ -44,7 +44,7 @@ with
         from {{ ref('stg_erp__stateprovince') }}
     ),
 
-        joined_data as (
+        joined_region as (
         select
             sales_territory.territoryid,
             sales_territory.territory_name,
