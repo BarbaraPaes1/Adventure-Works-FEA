@@ -19,7 +19,7 @@ with
     joined_reason as (
         select
             sales_reason.salesorderid,
-            string_agg(reason.salereason_name, ', ') as reason_agg  
+            LISTAGG(reason.salereason_name, ', ') as reason_agg 
         from sales_reason
         left join reason 
             on sales_reason.salesreasonid = reason.salesreasonid
@@ -29,7 +29,7 @@ with
 
     final_reason as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['salesorderid', 'reason_agg']) }} as sk_reason,
+            {{ dbt_utils.generate_surrogate_key(['salesorderid']) }} as sk_reason,
             salesorderid,
             reason_agg
         from joined_reason

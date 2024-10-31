@@ -12,13 +12,13 @@ with
 
     , person as (
         select
-            businessentityid
-            , persontype
-            , firstname
-            , middlename
-            , lastname
-            , fullname
-            , modifieddate
+            cast(businessentityid as int) as businessentityid,
+            persontype,
+            firstname,
+            middlename,
+            lastname,
+            firstname || ' ' || middlename || ' ' || lastname as fullname,
+            modifieddate
         from {{ref('stg_erp__person')}}
     )
 
@@ -26,7 +26,6 @@ with
         select 
             customer.customerid
             , person.businessentityid
-            , customer.storeid
             , person.firstname
             , person.middlename
             , person.lastname
@@ -38,7 +37,7 @@ with
 
     , dim_customer as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['customerid', 'businessentityid', 'fullname']) }} as sk_customer
+            {{ dbt_utils.generate_surrogate_key(['customerid', 'businessentityid']) }} as sk_customer
             , *
         from joined_customer
     )

@@ -3,35 +3,37 @@
 with
     product_category as(
         select
-            productcategoryid
-            , name as product_category_name
+            productcategoryid,
+            product_category_name
         from {{ ref('stg_erp__productcategory') }}
     ),
 
     product_subcategory as (
         select
-            productsubcategoryid
-            , productcategoryid
-            , name as product_subcategory_name
+            productsubcategoryid,
+            productcategoryid,
+            product_subcategory_name
         from {{ ref('stg_erp__productsubcategory') }}
     ),
 
     joined_category_subcategory as (
         select
-            pc.ProductCategoryID,
-            string_agg(ps.subcategory_name, ', ') as subcategories_agg
+            pc.productcategoryid,
+            pc.product_category_name,
+            LISTAGG(ps.product_subcategory_name, ', ') as subcategories_agg
         from product_category pc
-        left join product_subcategory ps on pc.ProductCategoryID = ps.ProductCategoryID
+        left join product_subcategory ps on pc.productcategoryid = ps.productcategoryid
         group by 
-            pc.ProductCategoryID, 
+            pc.productcategoryid
+         ,  pc.product_category_name
     ),
 
     int_categorys_products as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['ProductCategoryID']) }} as sk_category,
-            ProductCategoryID,
+            {{ dbt_utils.generate_surrogate_key(['productcategoryid']) }} as sk_category,
+            productcategoryid,
             product_category_name,
-            product_subcategory_name
+            subcategories_agg as product_subcategory_name
         from joined_category_subcategory
     )
 

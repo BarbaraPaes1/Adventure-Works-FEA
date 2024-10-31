@@ -1,37 +1,36 @@
-{{ config(materialized= 'table') }} 
- 
- 
- 
+{{ config(materialized= 'table') }}
+
+with 
     int_categorys_products as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['ProductCategoryID']) }} as sk_category,
-            ProductCategoryID,
+            {{ dbt_utils.generate_surrogate_key(['productcategoryid']) }} as sk_category,
+            productcategoryid,
             product_category_name,
             product_subcategory_name
         from {{ ref('int_categorys_products') }}
     ),
 
-    product as(
+    product as (
         select
-            productid
-            , productsubcategoryid
-            , name as product_name
-            , color
-            , size
-            , productline
-            , DATE(sellstartdate)
-            , DATE(sellenddate)
-            , style
-            , standardcost
-            , listprice
-            , modifieddate
+            productid,
+            productsubcategoryid,
+            name as product_name,
+            color,
+            size,
+            productline,
+            DATE(sellstartdate) as sell_start_date,
+            DATE(sellenddate) as sell_end_date,
+            style,
+            standardcost,
+            listprice,
+            modifieddate as product_modified_date
         from {{ ref('stg_erp__product') }}
     ),
 
     dim_products as (
         select
-            {{ dbt_utils.generate_surrogate_key(['ProductID', 'ProductCategoryID']) }} as sk_product,
-            p.ProductID,
+            {{ dbt_utils.generate_surrogate_key(['productid']) }} as sk_product,
+            p.productid,
             p.product_name,
             p.color,
             p.size,
@@ -47,7 +46,7 @@
             cp.product_subcategory_name
         from product p
         left join int_categorys_products cp
-            on p.ProductCategoryID = cp.ProductCategoryID
+            on p.productsubcategoryid = cp.productcategoryid
     )
 
 select *
@@ -55,5 +54,4 @@ from dim_products
 
 
 
-select *
-from dim_products
+
