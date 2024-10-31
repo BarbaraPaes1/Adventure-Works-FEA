@@ -1,12 +1,12 @@
 with
     person as (
         select
-            cast(businessentityid as int) as businessentityid,
+            businessentityid,
             persontype,
             firstname,
             middlename,
             lastname,
-            firstname || ' ' || middlename || ' ' || lastname as full_name,
+            firstname || ' ' || middlename || ' ' || lastname as fullname,
             modifieddate
         from {{ source('erp_adventureworks', 'PERSON') }}
     )
