@@ -7,8 +7,8 @@ with
             , color
             , size
             , productline
-            , DATE(sellstartdate)
-            , DATE(sellenddate)
+            , DATE(sellstartdate) as sellstartdate
+            , DATE(sellenddate) as sellenddate
             , style
             , standardcost
             , listprice
