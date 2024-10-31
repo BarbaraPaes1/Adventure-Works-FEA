@@ -38,7 +38,7 @@ with
     ) 
     --Fazendo join 
 
-    , fSalesHeader as (
+    , fact_salesorder as (
         select
             salesheader.salesorderid
             , dim_location.sk_region as fk_region
