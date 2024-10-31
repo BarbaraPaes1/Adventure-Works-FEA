@@ -14,7 +14,7 @@ with
         select
             productid,
             productsubcategoryid,
-            name as product_name,
+            product_name,
             color,
             size,
             productline,
