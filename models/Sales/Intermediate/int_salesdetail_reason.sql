@@ -3,37 +3,35 @@
 with
     sales_reason as (
         select
-            salesorderid
-            , salesreasonid
-            , modifieddate
+            salesorderid,
+            salesreasonid,
         from {{ ref('stg_erp__reason') }}
-    )
+    ),
 
-    , reason as (
+    reason as (
         select
-            salesreasonid
-            , reason
-            , reasontype
-            , modifieddate
+            salesreasonid,
+            salereason_name,
+            reason_type,
         from {{ ref('stg_erp__salesreason') }}
-    )
+    ),
 
-    , joined_reason as (
+    joined_reason as (
         select
-            sales_reason.salesorderid
-            , string_agg(reason.reason, ', ') as reason_agg
+            sales_reason.salesorderid,
+            string_agg(reason.salereason_name, ', ') as reason_agg  
         from sales_reason
         left join reason 
             on sales_reason.salesreasonid = reason.salesreasonid
         group by 
             sales_reason.salesorderid
-    )
+    ),
 
-    , final_reason as (
+    final_reason as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['salesorderid', 'reason_agg']) }} as sk_reason
-            , salesorderid
-            , reason_agg
+            {{ dbt_utils.generate_surrogate_key(['salesorderid', 'reason_agg']) }} as sk_reason,
+            salesorderid,
+            reason_agg
         from joined_reason
     )
 

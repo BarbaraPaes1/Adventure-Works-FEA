@@ -48,14 +48,3 @@ from dim_creditcard
 
 
 
-
-
-
-
-
-
-
-
-
-select *
-from creditcard
