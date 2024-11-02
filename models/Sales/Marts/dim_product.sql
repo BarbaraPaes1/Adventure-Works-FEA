@@ -18,12 +18,9 @@ with
             color,
             size,
             productline,
-            DATE(sellstartdate) as sell_start_date,
-            DATE(sellenddate) as sell_end_date,
             style,
             standardcost,
-            listprice,
-            modifieddate as product_modified_date
+            listprice
         from {{ ref('stg_erp__product') }}
     ),
 
@@ -35,12 +32,9 @@ with
             p.color,
             p.size,
             p.productline,
-            p.sell_start_date,
-            p.sell_end_date,
             p.style,
             p.standardcost,
             p.listprice,
-            p.product_modified_date,
             cp.sk_category,
             cp.product_category_name,
             cp.product_subcategory_name
