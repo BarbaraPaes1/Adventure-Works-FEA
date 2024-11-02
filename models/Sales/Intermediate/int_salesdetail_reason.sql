@@ -31,7 +31,8 @@ with
         select 
             {{ dbt_utils.generate_surrogate_key(['salesorderid']) }} as sk_reason,
             salesorderid,
-            reason_agg
+            reason_agg,
+            reason_type
         from joined_reason
     )
 
