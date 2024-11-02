@@ -32,6 +32,7 @@ with
         select 
             {{ dbt_utils.generate_surrogate_key(['productcategoryid']) }} as sk_category,
             productcategoryid,
+            productsubcategoryid,
             product_category_name,
             subcategories_agg as product_subcategory_name
         from joined_category_subcategory
