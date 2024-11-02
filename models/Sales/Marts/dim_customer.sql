@@ -25,8 +25,9 @@ with
     , joined_customer as (
         select 
             customer.customerid
-            , person.businessentityid
             , person.firstname
+            , persontype
+            , territoryid
             , person.middlename
             , person.lastname
             , person.fullname
@@ -37,7 +38,7 @@ with
 
     , dim_customer as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['customerid', 'businessentityid']) }} as sk_customer
+            {{ dbt_utils.generate_surrogate_key(['customerid']) }} as sk_customer
             , *
         from joined_customer
     )
