@@ -65,7 +65,7 @@ with
 
     dim_Location as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['territoryid']) }} as sk_region,
+            {{ dbt_utils.generate_surrogate_key(['addressid']) }} as sk_region,
             *
         from joined_region
     )
