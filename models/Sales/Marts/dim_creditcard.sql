@@ -37,7 +37,7 @@ with
 
     dim_creditcard as (
         select 
-            {{ dbt_utils.generate_surrogate_key(['creditcardid', 'businessentityid']) }} as sk_creditcard,
+            {{ dbt_utils.generate_surrogate_key(['creditcardid']) }} as sk_creditcard,
             *
         from joined_data
     )

@@ -72,7 +72,7 @@ with
         left join dim_salesdetails
             on salesheader.salesorderid = dim_salesdetails.salesorderid 
         left join dim_product
-            on dim_salesdetails.productid = dim_product.productid     
+            on dim_salesdetails.productid = dim_product.productid    
     )
 
 select * 
