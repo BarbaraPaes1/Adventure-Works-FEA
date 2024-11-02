@@ -20,15 +20,17 @@ with
         select
             pc.productcategoryid,
             pc.product_category_name,
+            ps.productsubcategoryid,
             LISTAGG(ps.product_subcategory_name, ', ') as subcategories_agg
         from product_category pc
         left join product_subcategory ps on pc.productcategoryid = ps.productcategoryid
         group by 
-            pc.productcategoryid
-         ,  pc.product_category_name
+            pc.productcategoryid,
+            pc.product_category_name,
+            ps.productsubcategoryid
     ),
 
-    int_categorys_products as (
+    int_categories_products as (
         select 
             {{ dbt_utils.generate_surrogate_key(['productcategoryid']) }} as sk_category,
             productcategoryid,
@@ -39,4 +41,4 @@ with
     )
 
 select *
-from int_categorys_products
+from int_categories_products
