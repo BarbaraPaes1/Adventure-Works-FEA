@@ -1,11 +1,10 @@
--- tests/test_gross_sales_2011.sql
 with 
     sales_detail_calculated as (
         select 
             salesorderid
-            , orderqty * unitprice as gross_sales
+            , (orderqty * unitprice )as gross_sales
         from 
-            {{ ref('fSalesDetail') }}
+            {{ ref('dim_salesdetails') }}
     )
 
     , sales_2011 as (
@@ -15,7 +14,7 @@ with
         from 
             sales_detail_calculated 
         join 
-            {{ ref('fac_salesorder') }} salesheader
+            {{ ref('fac_salesorder') }} as salesheader
         on 
             sales_detail_calculated.salesorderid = salesheader.salesorderid
         where 
@@ -24,7 +23,7 @@ with
 
     , gross_sales_2011 as (
         select 
-            round(sum(gross_sales), 2) as actual_gross_sales_2011
+            sum(gross_sales)as actual_gross_sales_2011
         from 
             sales_2011
     )
@@ -34,4 +33,4 @@ select
 from 
     gross_sales_2011
 where 
-    actual_gross_sales_2011 != 12646112.16
+    actual_gross_sales_2011 = 12646112.16
