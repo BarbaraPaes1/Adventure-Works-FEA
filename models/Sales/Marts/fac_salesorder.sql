@@ -48,6 +48,7 @@ with
             salesheader.orderdate,
             salesheader.duedate,
             salesheader.shipdate,
+            salesheader.billtoaddressid,
             case
                 when salesheader.status = 1 then 'In process'
                 when salesheader.status = 2 then 'Approved'
